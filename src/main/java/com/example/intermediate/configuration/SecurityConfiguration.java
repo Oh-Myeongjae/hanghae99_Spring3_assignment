@@ -74,4 +74,43 @@ public class SecurityConfiguration {
 
         return http.build();
     }
+  @Value("${jwt.secret}")
+  String SECRET_KEY;
+  private final TokenProvider tokenProvider;
+  private final UserDetailsServiceImpl userDetailsService;
+  private final AuthenticationEntryPointException authenticationEntryPointException;
+  private final AccessDeniedHandlerException accessDeniedHandlerException;
+
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
+
+  @Bean
+  @Order(SecurityProperties.BASIC_AUTH_ORDER)
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http.cors();
+
+    http.csrf().disable()
+
+        .exceptionHandling()
+        .authenticationEntryPoint(authenticationEntryPointException)
+        .accessDeniedHandler(accessDeniedHandlerException)
+
+        .and()
+        .sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+        .and()
+        .authorizeRequests()
+        .antMatchers("/api/member/**").permitAll()
+        .antMatchers("/api/post/**").permitAll()
+        .antMatchers("/api/comment/**").permitAll()
+        .anyRequest().authenticated()
+
+        .and()
+        .apply(new JwtSecurityConfiguration(SECRET_KEY, tokenProvider, userDetailsService));
+
+    return http.build();
+  }
 }

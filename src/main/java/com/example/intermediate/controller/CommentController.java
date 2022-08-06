@@ -47,4 +47,5 @@ public class CommentController {
     return CommentService.getAllLikes(member_Id, id);
   }
   }
+}
 
