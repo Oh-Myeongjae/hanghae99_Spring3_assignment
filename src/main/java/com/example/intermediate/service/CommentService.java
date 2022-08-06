@@ -7,7 +7,10 @@ import com.example.intermediate.controller.response.SubCommentResponseDto;
 import com.example.intermediate.domain.Comment;
 import com.example.intermediate.domain.Member;
 import com.example.intermediate.domain.Post;
+import com.example.intermediate.controller.request.CommentRequestDto;
+import com.example.intermediate.domain.UserDetailsImpl;
 import com.example.intermediate.domain.SubComment;
+
 import com.example.intermediate.jwt.TokenProvider;
 import com.example.intermediate.repository.CommentRepository;
 import com.example.intermediate.repository.SubCommentRepository;
@@ -29,7 +32,9 @@ public class CommentService {
   private final TokenProvider tokenProvider;
   private final PostService postService;
 
+
   private final SubCommentRepository subCommentRepository;
+
 
   @Transactional
   public ResponseDto<?> createComment(CommentRequestDto requestDto, HttpServletRequest request) {
@@ -66,6 +71,7 @@ public class CommentService {
             .content(comment.getContent())
             .createdAt(comment.getCreatedAt())
             .modifiedAt(comment.getModifiedAt())
+            .like(comment.getLike())
             .build()
     );
   }
@@ -106,6 +112,7 @@ public class CommentService {
               .subCommentResponseDtoList(subCommentResponseDtoList) // 여기에 대댓글 넣기
               .createdAt(comment.getCreatedAt())
               .modifiedAt(comment.getModifiedAt())
+              .like(comment.getLike())
               .build()
       );
     }
@@ -198,4 +205,12 @@ public class CommentService {
     }
     return tokenProvider.getMemberFromAuthentication();
   }
+  public List<Comment> getAllLikes(UserDetailsImpl member_Id, Long id) {
+    return commentRepository.findByLike(member_Id);
+  }
+  @Transactional(readOnly = true)
+  public ResponseDto<?> getComment() {
+    return ResponseDto.success(commentRepository.findAllByOrderByModifiedAtDesc());
+  }
 }
+
