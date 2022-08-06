@@ -19,5 +19,4 @@ public class CommentResponseDto {
   private List<SubCommentResponseDto> subCommentResponseDtoList;
   private LocalDateTime createdAt;
   private LocalDateTime modifiedAt;
-  private Long like;
 }
