@@ -40,6 +40,21 @@ public class SecurityConfiguration {
     }
 
 
+
+  @Bean
+  public WebSecurityCustomizer webSecurityCustomizer() {
+    // h2-console 사용에 대한 허용 (CSRF, FrameOptions 무시)
+    return (web) -> web.ignoring()
+            .antMatchers("/h2-console/**");
+  }
+
+
+  @Bean
+  @Order(SecurityProperties.BASIC_AUTH_ORDER)
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http.cors();
+
+
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         // h2-console 사용에 대한 허용 (CSRF, FrameOptions 무시)
@@ -53,7 +68,15 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors();
 
-        http.csrf().disable()
+
+        .and()
+        .authorizeRequests()
+        .antMatchers("/api/member/**").permitAll()
+        .antMatchers("/api/post/**").permitAll()
+        .antMatchers("/api/comment/**").permitAll()
+        .antMatchers("/api/subcomment/**").permitAll()
+        .anyRequest().authenticated()
+
 
                 .exceptionHandling()
                 .authenticationEntryPoint(authenticationEntryPointException)
