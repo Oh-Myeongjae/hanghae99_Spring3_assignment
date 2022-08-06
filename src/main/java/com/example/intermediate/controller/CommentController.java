@@ -44,8 +44,7 @@ public class CommentController {
   }
   @RequestMapping(value = "/api/myPage/{id}", method = RequestMethod.GET)
   public List<Comment> getAllLikes(@AuthenticationPrincipal UserDetailsImpl member_Id, @PathVariable Long id) {
-    return CommentService.getAllLikes(member_Id, id);
+    return commentService.getAllLikes(member_Id, id);
   }
   }
-}
 

@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CommentService {
 
-  private static final CommentRepository commentRepository = null;
   private final CommentRepository commentRepository;
 
   private final TokenProvider tokenProvider;
@@ -179,7 +178,7 @@ public class CommentService {
     }
     return tokenProvider.getMemberFromAuthentication();
   }
-  public static List<Comment> getAllLikes(UserDetailsImpl member_Id, Long id) {
+  public List<Comment> getAllLikes(UserDetailsImpl member_Id, Long id) {
     return commentRepository.findByLike(member_Id);
   }
   @Transactional(readOnly = true)

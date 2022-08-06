@@ -36,15 +36,12 @@ public class Comment extends Timestamped {
   @Column(nullable = false)
   private String content;
 
-<<<<<<< HEAD
   @Column(nullable = true)
   private Long like;
 
 //  public void create(CommentRequestDto commentRequestDto) {
 //    this.like = "6";
 //  }
-=======
->>>>>>> origin/main
   public void update(CommentRequestDto commentRequestDto) {
     this.content = commentRequestDto.getContent();
   }
