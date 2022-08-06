@@ -1,20 +1,24 @@
 package com.example.intermediate.service;
 
-import com.example.intermediate.controller.response.ResponseDto;
+import com.example.intermediate.controller.request.CommentRequestDto;
 import com.example.intermediate.controller.response.CommentResponseDto;
+import com.example.intermediate.controller.response.ResponseDto;
+import com.example.intermediate.controller.response.SubCommentResponseDto;
 import com.example.intermediate.domain.Comment;
 import com.example.intermediate.domain.Member;
 import com.example.intermediate.domain.Post;
-import com.example.intermediate.controller.request.CommentRequestDto;
+import com.example.intermediate.domain.SubComment;
 import com.example.intermediate.jwt.TokenProvider;
 import com.example.intermediate.repository.CommentRepository;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import javax.servlet.http.HttpServletRequest;
+import com.example.intermediate.repository.SubCommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +28,8 @@ public class CommentService {
 
   private final TokenProvider tokenProvider;
   private final PostService postService;
+
+  private final SubCommentRepository subCommentRepository;
 
   @Transactional
   public ResponseDto<?> createComment(CommentRequestDto requestDto, HttpServletRequest request) {
@@ -75,11 +81,29 @@ public class CommentService {
     List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
 
     for (Comment comment : commentList) {
+
+      // 대댓글 리스트
+      List<SubComment> subCommentList = subCommentRepository.findAllByComment(comment);
+      List<SubCommentResponseDto> subCommentResponseDtoList = new ArrayList<>();
+
+      for (SubComment subComment : subCommentList) {
+        subCommentResponseDtoList.add(
+          SubCommentResponseDto.builder()
+                  .id(subComment.getId())
+                  .author(subComment.getMember().getNickname())
+                  .content(subComment.getContent())
+                  .createdAt(subComment.getCreatedAt())
+                  .modifiedAt(subComment.getModifiedAt())
+                  .build()
+        );
+      }
+
       commentResponseDtoList.add(
           CommentResponseDto.builder()
               .id(comment.getId())
               .author(comment.getMember().getNickname())
               .content(comment.getContent())
+              .subCommentResponseDtoList(subCommentResponseDtoList) // 여기에 대댓글 넣기
               .createdAt(comment.getCreatedAt())
               .modifiedAt(comment.getModifiedAt())
               .build()
