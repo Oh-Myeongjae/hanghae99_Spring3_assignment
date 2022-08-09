@@ -1,28 +1,27 @@
 package com.example.intermediate.service;
 
+
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.example.intermediate.controller.request.PostRequestDto;
 import com.example.intermediate.controller.response.CommentResponseDto;
 import com.example.intermediate.controller.response.PostResponseDto;
+import com.example.intermediate.controller.response.ResponseDto;
 import com.example.intermediate.domain.Comment;
 import com.example.intermediate.domain.Member;
 import com.example.intermediate.domain.Post;
-import com.example.intermediate.controller.request.PostRequestDto;
-import com.example.intermediate.controller.response.ResponseDto;
 import com.example.intermediate.jwt.TokenProvider;
 import com.example.intermediate.repository.CommentRepository;
 import com.example.intermediate.repository.PostRepository;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,7 +37,6 @@ public class PostService {
 
   private final PostRepository postRepository;
   private final CommentRepository commentRepository;
-
   private final TokenProvider tokenProvider;
 
   @Transactional
@@ -78,6 +76,7 @@ public class PostService {
             .content(post.getContent())
             .image((post.getImageUrl()))
             .author(post.getMember().getNickname())
+            .likes(post.getLikes()) // 여기에 likes
             .createdAt(post.getCreatedAt())
             .modifiedAt(post.getModifiedAt())
             .build()
@@ -92,9 +91,6 @@ public class PostService {
     }
 
     List<Comment> commentList = commentRepository.findAllByPost(post);
-
-    System.out.println("[게시글 조회] 해당 게시물의 댓글 리스트 (commentList): " + commentList);
-
     List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
 
     for (Comment comment : commentList) {
@@ -103,13 +99,12 @@ public class PostService {
               .id(comment.getId())
               .author(comment.getMember().getNickname())
               .content(comment.getContent())
+              .likes(comment.getLikes()) // 여기에 likes
               .createdAt(comment.getCreatedAt())
               .modifiedAt(comment.getModifiedAt())
               .build()
       );
     }
-
-    System.out.println("[게시글 조회] 해당 게시물의 댓글 리스트 DTO (commentResponseDtoList): " + commentResponseDtoList);
 
     return ResponseDto.success(
         PostResponseDto.builder()
@@ -118,6 +113,7 @@ public class PostService {
             .content(post.getContent())
             .commentResponseDtoList(commentResponseDtoList)
             .author(post.getMember().getNickname())
+            .likes(post.getLikes()) // 여기에 likes
             .createdAt(post.getCreatedAt())
             .modifiedAt(post.getModifiedAt())
             .build()

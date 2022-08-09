@@ -8,6 +8,7 @@ import com.example.intermediate.domain.Member;
 import com.example.intermediate.domain.Post;
 import com.example.intermediate.domain.SubComment;
 import com.example.intermediate.jwt.TokenProvider;
+import com.example.intermediate.repository.LikeSubCommentRepository;
 import com.example.intermediate.repository.SubCommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,12 +24,10 @@ import java.util.Optional;
 public class SubCommentService {
 
     private final SubCommentRepository subCommentRepository;
-
     private final TokenProvider tokenProvider;
-
     private final CommentService commentService;
-
     private final PostService postService;
+    private final LikeSubCommentRepository likeSubCommentRepository;
 
 
     @Transactional
@@ -61,13 +60,13 @@ public class SubCommentService {
                 .comment(comment)
                 .content(requestDto.getContent())
                 .build();
-        
         subCommentRepository.save(subComment);
         return ResponseDto.success(
             SubCommentResponseDto.builder()
                     .id(subComment.getId())
                     .author(subComment.getMember().getNickname())
                     .content(subComment.getContent())
+                    .likes(subComment.getLikes()) // 여기에 likes
                     .createdAt(subComment.getCreatedAt())
                     .modifiedAt(subComment.getModifiedAt())
                     .build()
@@ -91,6 +90,7 @@ public class SubCommentService {
                             .id(subComment.getId())
                             .author(subComment.getMember().getNickname())
                             .content(subComment.getContent())
+                            .likes(subComment.getLikes()) // 여기에 likes
                             .createdAt(subComment.getCreatedAt())
                             .modifiedAt(subComment.getModifiedAt())
                             .build()
@@ -136,6 +136,7 @@ public class SubCommentService {
                         .id(subComment.getId())
                         .author(subComment.getMember().getNickname())
                         .content(subComment.getContent())
+                        .likes(subComment.getLikes()) // 여기에 likes
                         .createdAt(subComment.getCreatedAt())
                         .modifiedAt(subComment.getModifiedAt())
                         .build()

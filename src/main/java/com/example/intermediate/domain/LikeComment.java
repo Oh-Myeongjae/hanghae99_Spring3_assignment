@@ -1,7 +1,5 @@
 package com.example.intermediate.domain;
 
-import com.example.intermediate.controller.request.CommentRequestDto;
-import com.example.intermediate.controller.request.SubCommentRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class SubComment extends Timestamped {
+public class LikeComment extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,29 +22,12 @@ public class SubComment extends Timestamped {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    @JoinColumn(name = "post_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Post post;
-
     @JoinColumn(name = "comment_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Comment comment;
-
-    @Column(nullable = false)
-    private String content;
-
-    @Column(nullable = true)
-    private Long likes;
-
-    public void update(SubCommentRequestDto subCommentRequestDto) {
-        this.content = subCommentRequestDto.getContent();
-    }
 
     public boolean validateMember(Member member) {
         return !this.member.equals(member);
     }
 
-    public void updateLikes(Long likes) {
-        this.likes = likes;
-    }
 }

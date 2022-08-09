@@ -10,6 +10,7 @@ import com.example.intermediate.domain.Post;
 import com.example.intermediate.domain.SubComment;
 import com.example.intermediate.jwt.TokenProvider;
 import com.example.intermediate.repository.CommentRepository;
+import com.example.intermediate.repository.LikeCommentRepository;
 import com.example.intermediate.repository.SubCommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,11 +26,10 @@ import java.util.Optional;
 public class CommentService {
 
   private final CommentRepository commentRepository;
-
   private final TokenProvider tokenProvider;
   private final PostService postService;
-
   private final SubCommentRepository subCommentRepository;
+  private final LikeCommentRepository likeCommentRepository;
 
   @Transactional
   public ResponseDto<?> createComment(CommentRequestDto requestDto, HttpServletRequest request) {
@@ -64,6 +64,7 @@ public class CommentService {
             .id(comment.getId())
             .author(comment.getMember().getNickname())
             .content(comment.getContent())
+            .likes(comment.getLikes()) // 여기에 likes
             .createdAt(comment.getCreatedAt())
             .modifiedAt(comment.getModifiedAt())
             .build()
@@ -92,6 +93,7 @@ public class CommentService {
                   .id(subComment.getId())
                   .author(subComment.getMember().getNickname())
                   .content(subComment.getContent())
+                  .likes(subComment.getLikes()) // 여기에 likes
                   .createdAt(subComment.getCreatedAt())
                   .modifiedAt(subComment.getModifiedAt())
                   .build()
@@ -104,6 +106,7 @@ public class CommentService {
               .author(comment.getMember().getNickname())
               .content(comment.getContent())
               .subCommentResponseDtoList(subCommentResponseDtoList) // 여기에 대댓글 넣기
+              .likes(comment.getLikes()) // 여기에 likes
               .createdAt(comment.getCreatedAt())
               .modifiedAt(comment.getModifiedAt())
               .build()
@@ -149,6 +152,7 @@ public class CommentService {
             .id(comment.getId())
             .author(comment.getMember().getNickname())
             .content(comment.getContent())
+            .likes(comment.getLikes())
             .createdAt(comment.getCreatedAt())
             .modifiedAt(comment.getModifiedAt())
             .build()
