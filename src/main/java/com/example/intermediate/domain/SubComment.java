@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Builder
 @Getter
@@ -38,6 +39,8 @@ public class SubComment extends Timestamped {
     @Column(nullable = true)
     private Long likes;
 
+    @OneToMany(mappedBy = "subComment", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<LikeSubComment> likeSubComment;
     public void update(SubCommentRequestDto subCommentRequestDto) {
         this.content = subCommentRequestDto.getContent();
     }
