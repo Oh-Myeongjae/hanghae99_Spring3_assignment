@@ -7,4 +7,5 @@ public interface LikeSubCommentRepository extends JpaRepository<LikeSubComment, 
     Long countAllBySubCommentId(Long subCommentId);
 
     void deleteBySubCommentId(Long subCommentId);
+
 }

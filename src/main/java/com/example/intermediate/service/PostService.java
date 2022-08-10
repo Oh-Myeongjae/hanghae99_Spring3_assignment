@@ -14,13 +14,14 @@ import com.example.intermediate.domain.Comment;
 import com.example.intermediate.domain.Member;
 import com.example.intermediate.domain.Post;
 import com.example.intermediate.jwt.TokenProvider;
-import com.example.intermediate.repository.CommentRepository;
-import com.example.intermediate.repository.PostRepository;
+import com.example.intermediate.repository.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,11 @@ public class PostService {
   private final PostRepository postRepository;
   private final CommentRepository commentRepository;
   private final TokenProvider tokenProvider;
+  private final LikePostRepository likePostRepository;
+  private final SubCommentRepository subCommentRepository;
+  private final LikeCommentRepository likeCommentRepository;
+  private final LikeSubCommentRepository likeSubCommentRepository;
+
 
   @Transactional
   public ResponseDto<?> createPost(PostRequestDto postRequestDto, HttpServletRequest request) throws IOException {
@@ -181,6 +187,12 @@ public class PostService {
       return ResponseDto.fail("BAD_REQUEST", "작성자만 삭제할 수 있습니다.");
     }
 
+
+//    likeSubCommentRepository.deleteBySubCommentId();
+//    likeCommentRepository.deleteByCommentId();
+//    likePostRepository.deleteByPostId(id);
+    subCommentRepository.deleteByPostId(id);
+    commentRepository.deleteByPostId(id);
     postRepository.delete(post);
     return ResponseDto.success("delete success");
   }
