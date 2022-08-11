@@ -1,5 +1,6 @@
 package com.example.intermediate.repository;
 
+import com.example.intermediate.domain.Member;
 import com.example.intermediate.domain.Post;
 import java.util.List;
 import java.util.Optional;
@@ -7,5 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
   List<Post> findAllByOrderByModifiedAtDesc();
+
+    Optional<Post> findByMemberId(Member member);
+    List<Post> findByMember(Member member);
 
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
+
 @RequiredArgsConstructor
 @RestController
 public class PostController {
@@ -16,7 +17,7 @@ public class PostController {
   private final PostService postService;
 
   @RequestMapping(value = "/api/auth/post", method = RequestMethod.POST)
-  public ResponseDto<?> createPost(@ModelAttribute PostRequestDto postRequestDto, HttpServletRequest request) throws IOException {
+  public ResponseDto<?> createPost(@ModelAttribute PostRequestDto postRequestDto, HttpServletRequest request) throws  IOException {
     return postService.createPost(postRequestDto, request);
   }
 

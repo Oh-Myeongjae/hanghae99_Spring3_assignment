@@ -33,21 +33,7 @@ public class SecurityConfiguration {
   private final UserDetailsServiceImpl userDetailsService;
   private final AuthenticationEntryPointException authenticationEntryPointException;
   private final AccessDeniedHandlerException accessDeniedHandlerException;
-  private static final String[] PERMIT_URL_ARRAY = {
-          /* swagger v2 */
-          "/v2/api-docs",
-          "/swagger-resources",
-          "/swagger-resources/**",
-          "/configuration/ui",
-          "/configuration/security",
-          "/swagger-ui.html",
-          "/webjars/**",
-          /* project */
-          "/api/member/**",
-          "/api/post/**",
-          "/api/comment/**",
-          "/api/subcomment/**"
-  };
+
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
@@ -79,8 +65,15 @@ public class SecurityConfiguration {
 
         .and()
         .authorizeRequests()
-        .antMatchers(PERMIT_URL_ARRAY).permitAll()
+        .antMatchers("/api/member/**").permitAll()
+        .antMatchers("/api/post/**").permitAll()
+        .antMatchers("/api/comment/**").permitAll()
+        .antMatchers("/api/subcomment/**").permitAll()
+        .antMatchers("/api/myPage/**").permitAll()
         .anyRequest().authenticated()
+        .and()
+        .authorizeRequests()
+
 
         .and()
         .apply(new JwtSecurityConfiguration(SECRET_KEY, tokenProvider, userDetailsService));

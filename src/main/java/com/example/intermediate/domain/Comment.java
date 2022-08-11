@@ -30,11 +30,9 @@ public class Comment extends Timestamped {
   @ManyToOne(fetch = FetchType.LAZY)
   private Post post;
 
-  @OneToMany(mappedBy ="comment", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   private List<SubComment> subComments;
 
-  @OneToMany(mappedBy = "comment", cascade = CascadeType.REMOVE, orphanRemoval = true)
-  private List<LikeComment> likeSubComment;
   @Column(nullable = false)
   private String content;
 
@@ -52,4 +50,5 @@ public class Comment extends Timestamped {
   public void updateLikes(Long likes) {
     this.likes = likes;
   }
+
 }
