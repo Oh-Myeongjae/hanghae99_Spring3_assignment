@@ -34,7 +34,6 @@ public class MyPage extends Timestamped{
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Comment> commentList;
 
-
     @JoinColumn(name = "subcomment_id", nullable = false)
     @ManyToMany(fetch = FetchType.LAZY)
     private List<SubComment> subCommentList;

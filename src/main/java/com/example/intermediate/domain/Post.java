@@ -37,10 +37,12 @@ public class Post extends Timestamped {
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Comment> comments;
 
+  @Column()
+  private String imageUrl;
+
   @JoinColumn(name = "member_id", nullable = false)
   @ManyToOne(fetch = FetchType.LAZY)
   private Member member;
-
   @Column(nullable = true)
   private Long likes;
 

@@ -29,7 +29,8 @@ public class MyPageService {
     private final LikeCommentRepository likeCommentRepository;
     private final LikeSubCommentRepository likeSubCommentRepository;
     private LikeComment likecomment;
-
+    private Post post;
+    private Comment comment;
     @Transactional
     public ResponseDto<MyPageDto> getMyPost(HttpServletRequest request) {
         if (null == request.getHeader("Refresh-Token")) {
@@ -86,6 +87,7 @@ public class MyPageService {
                     MyPagePostResponseDto.builder()
                             .id(post.getId())
                             .title(post.getTitle())
+                            .image((post.getImageUrl()))
                             .content(post.getContent())
                             .author(post.getMember().getNickname())
                             .likes(post.getLikes()) // 여기에 likes
@@ -127,6 +129,8 @@ public class MyPageService {
 
 
         List<LikeComment> likeCommentList = likeCommentRepository.findAllLikeByMember(member);
+//        Long likes  = likeCommentRepository.countAllByCommentId(comment.getId());
+//        comment.updateLikes(likes);
         List<LikeCommentResponseDto> LikeCommentResponseDtoList = new ArrayList<>();
 
         for (LikeComment likeComment : likeCommentList) {
@@ -136,11 +140,10 @@ public class MyPageService {
                             .author(likeComment.getMember().getNickname())
                             .content(likeComment.getComment().getContent())
                             .likes(likeComment.getComment().getLikes())
-                            .createdAt(likeComment.getComment().getCreatedAt())
-                            .modifiedAt(likeComment.getComment().getModifiedAt())
+                            .createdAt(likeComment.getCreatedAt())
+                            .modifiedAt(likeComment.getModifiedAt())
                             .build()
             );
-
 //            List<LikeSubComment> likeSubCommentList = likeSubCommentRepository.findAllByMember(member);
 //            List<MyPageLikeSubCommentResponseDto> MyPageLikeSubCommentResponseDtoList = new ArrayList<>();
 //
@@ -157,15 +160,17 @@ public class MyPageService {
 //                );
 //            }
         }
-
-
+//
+//        likes = likePostRepository.countAllByPostId(post.getId());
+//        post.updateLikes(likes);
         List<LikePost> likePostList = likePostRepository.getByMember(member);
         List<MyPageLikePostResponseDto> MyPageLikePostResponeseDtoList = new ArrayList<>();
         for(LikePost likePost : likePostList) {
             MyPageLikePostResponeseDtoList.add(
                     MyPageLikePostResponseDto.builder()
-                    .id(likePost.getId())
+                    .id(likePost.getPost().getId())
                     .title(likePost.getPost().getTitle())
+                    .image(likePost.getPost().getImageUrl())
                     .content(likePost.getPost().getContent())
                     .author(likePost.getMember().getNickname())
                     .likes(likePost.getPost().getLikes()) // 여기에 likes
@@ -173,6 +178,7 @@ public class MyPageService {
                     .modifiedAt(likePost.getModifiedAt())
                     .build()
             );
+            System.out.println(likePost.getPost().getLikes());
         }
         MyLikePageDto myLikePageDto = new MyLikePageDto();
         myLikePageDto.update(MyPageLikePostResponeseDtoList, LikeCommentResponseDtoList);

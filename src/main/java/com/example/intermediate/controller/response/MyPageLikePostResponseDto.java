@@ -18,6 +18,7 @@ public class MyPageLikePostResponseDto {
     private String author;
     private String content;
     private Long likes;
+    private String image;
     private List<CommentResponseDto> commentResponseDtoList;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;

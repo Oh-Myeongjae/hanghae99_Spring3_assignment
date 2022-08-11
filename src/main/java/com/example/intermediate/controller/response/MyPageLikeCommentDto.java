@@ -14,11 +14,9 @@ import java.util.List;
 @AllArgsConstructor
 public class MyPageLikeCommentDto {
     private Long id;
-    private String title;
     private String content;
     private String author;
-    private List<CommentResponseDto> commentResponseDtoList;
-    private List<PostResponseDto> postResponseDtoList;
+    private List<SubCommentResponseDto> subCommentResponseDtoList;
     private Long likes;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;

@@ -25,6 +25,5 @@ public class MyPageDto {
         this.postList = postResponseDtoList;
         this.commentList = commentResponseDtoList;
         this.subCommentList = subCommentResponseDtoList;
-
     }
 }

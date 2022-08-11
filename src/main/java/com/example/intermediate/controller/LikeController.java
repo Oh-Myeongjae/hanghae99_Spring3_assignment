@@ -46,4 +46,7 @@ public class LikeController {
     public ResponseDto<?> unlikeSubComment(@PathVariable Long subCommentId, HttpServletRequest request) {
         return likeService.unlikeSubComment(subCommentId, request);
     }
+
+
+
 }

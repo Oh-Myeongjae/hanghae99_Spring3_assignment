@@ -1,20 +1,14 @@
 package com.example.intermediate.controller;
 
 import com.example.intermediate.controller.request.PostRequestDto;
-import com.example.intermediate.controller.response.LikeResponseDto;
 import com.example.intermediate.controller.response.ResponseDto;
-import com.example.intermediate.domain.LikePost;
-import com.example.intermediate.domain.UserDetailsImpl;
-import com.example.intermediate.repository.LikePostRepository;
 import com.example.intermediate.service.PostService;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+
 
 @RequiredArgsConstructor
 @RestController
@@ -23,9 +17,8 @@ public class PostController {
   private final PostService postService;
 
   @RequestMapping(value = "/api/auth/post", method = RequestMethod.POST)
-  public ResponseDto<?> createPost(@RequestBody PostRequestDto requestDto,
-      HttpServletRequest request) {
-    return postService.createPost(requestDto, request);
+  public ResponseDto<?> createPost(@ModelAttribute PostRequestDto postRequestDto, HttpServletRequest request) throws  IOException {
+    return postService.createPost(postRequestDto, request);
   }
 
   @RequestMapping(value = "/api/post/{id}", method = RequestMethod.GET)
@@ -49,4 +42,5 @@ public class PostController {
       HttpServletRequest request) {
     return postService.deletePost(id, request);
   }
+
 }

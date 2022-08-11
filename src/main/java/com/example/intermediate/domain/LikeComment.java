@@ -1,9 +1,13 @@
 package com.example.intermediate.domain;
 
-import lombok.*;
-import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+
 @Builder
 @Getter
 @NoArgsConstructor
@@ -23,8 +27,6 @@ public class LikeComment extends Timestamped {
     @ManyToOne(fetch = FetchType.LAZY)
     private Comment comment;
 
-    @Column(nullable = false)
-    private String content;
     public boolean validateMember(Member member) {
         return !this.member.equals(member);
     }

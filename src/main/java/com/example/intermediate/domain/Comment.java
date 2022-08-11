@@ -47,7 +47,8 @@ public class Comment extends Timestamped {
     return !this.member.equals(member);
   }
 
-  public void updateLikes(Long likes) {
+  public void saveLikes(Long likes) {
     this.likes = likes;
   }
+
 }

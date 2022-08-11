@@ -34,7 +34,6 @@ public class MyLikePage extends Timestamped{
     @ManyToMany(fetch = FetchType.LAZY)
     private List<LikeComment> likeCommentList;
 
-
 //    @JoinColumn(name = "likeSubcomment_id", nullable = false)
 //    @ManyToMany(fetch = FetchType.LAZY)
 //    private List<LikeSubComment> likeSubCommentList;

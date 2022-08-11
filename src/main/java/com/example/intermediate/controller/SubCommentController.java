@@ -3,12 +3,8 @@ package com.example.intermediate.controller;
 
 import com.example.intermediate.controller.request.SubCommentRequestDto;
 import com.example.intermediate.controller.response.ResponseDto;
-import com.example.intermediate.domain.UserDetailsImpl;
 import com.example.intermediate.service.SubCommentService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,9 +38,4 @@ public class SubCommentController {
     public ResponseDto<?> deleteComment(@PathVariable Long id, HttpServletRequest request) {
         return subCommentService.deleteComment(id, request);
     }
-
-//    @RequestMapping(value = "/api/auth/like/subComment/{id}", method = RequestMethod.GET)
-//    public ResponseDto<?> getAllSubComment(@AuthenticationPrincipal UserDetailsImpl member_id, Long subCommentId) {
-//        return  subCommentService.getAllSubComment(member_id, subCommentId);
-//    }
 }
