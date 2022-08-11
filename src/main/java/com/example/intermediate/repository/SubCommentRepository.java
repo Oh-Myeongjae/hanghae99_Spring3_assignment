@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface SubCommentRepository extends JpaRepository<SubComment, Long> {
     List<SubComment> findAllByComment(Comment comment);
 
+    void deleteByPostId(Long id);
 }
