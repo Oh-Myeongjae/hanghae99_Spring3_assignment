@@ -22,19 +22,10 @@ public class LikeSubComment extends Timestamped{
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    @JoinColumn(name = "comment_id",nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Comment comment;
 
     @JoinColumn(name = "subComment_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private SubComment subComment;
-
-    @Column
-    private Long likes;
-
-    @Column
-    private String Content;
 
     public boolean validateMember(Member member) {
         return !this.member.equals(member);

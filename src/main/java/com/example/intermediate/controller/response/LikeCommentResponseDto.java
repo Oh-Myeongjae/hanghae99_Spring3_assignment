@@ -18,7 +18,6 @@ public class LikeCommentResponseDto {
     private String content;
     private String author;
     private List<CommentResponseDto> commentResponseDtoList;
-    private List<PostResponseDto> postResponseDtoList;
     private Long likes;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;

@@ -132,12 +132,12 @@ public class MyPageService {
         for (LikeComment likeComment : likeCommentList) {
             LikeCommentResponseDtoList.add(
                     LikeCommentResponseDto.builder()
-                            .id(likeComment.getId())
+                            .id(likeComment.getComment().getId())
                             .author(likeComment.getMember().getNickname())
-                            .content(likeComment.getContent())
-                            .likes(likeComment.getLikes())
-                            .createdAt(likeComment.getCreatedAt())
-                            .modifiedAt(likeComment.getModifiedAt())
+                            .content(likeComment.getComment().getContent())
+                            .likes(likeComment.getComment().getLikes())
+                            .createdAt(likeComment.getComment().getCreatedAt())
+                            .modifiedAt(likeComment.getComment().getModifiedAt())
                             .build()
             );
 
@@ -165,10 +165,10 @@ public class MyPageService {
             MyPageLikePostResponeseDtoList.add(
                     MyPageLikePostResponseDto.builder()
                     .id(likePost.getId())
-                    .title(likePost.getTitle())
-                    .content(likePost.getContent())
+                    .title(likePost.getPost().getTitle())
+                    .content(likePost.getPost().getContent())
                     .author(likePost.getMember().getNickname())
-                    .likes(likePost.getLikes()) // 여기에 likes
+                    .likes(likePost.getPost().getLikes()) // 여기에 likes
                     .createdAt(likePost.getCreatedAt())
                     .modifiedAt(likePost.getModifiedAt())
                     .build()
