@@ -42,7 +42,8 @@ out/
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
-application-aws.properties
+**/application-aws.properties
+**/application.properties
 
 # User-specific stuff
 .idea/**/workspace.xml
@@ -88,12 +89,6 @@ cmake-build-*/
 
 # Mongo Explorer plugin
 .idea/**/mongoSettings.xml
-
-# File-based project format
-*.iws
-
-# IntelliJ
-out/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -213,7 +208,6 @@ Temporary Items
 *.icloud
 
 ### Gradle ###
-.gradle
 **/build/
 !src/**/build/
 
@@ -228,11 +222,3 @@ gradle-app.setting
 
 # Cache of project
 .gradletasknamecache
-
-# Eclipse Gradle plugin generated files
-# Eclipse Core
-.project
-# JDT-specific (Eclipse Java Development Tools)
-.classpath
-
-# End of https://www.toptal.com/developers/gitignore/api/macos,intellij,java,gradle
