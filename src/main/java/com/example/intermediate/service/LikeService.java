@@ -34,6 +34,7 @@ public class LikeService {
         if (null == request.getHeader("Refresh-Token")) {
             return ResponseDto.fail("MEMBER_NOT_FOUND",
                     "로그인이 필요합니다.");
+
         }
 
         if (null == request.getHeader("Authorization")) {
@@ -138,7 +139,7 @@ public class LikeService {
         // like 등록
         LikeComment likeComment = LikeComment.builder()
                 .member(comment.getMember())
-                .comment(comment)
+                .content(comment.getContent())
                 .build();
         likeCommentRepository.save(likeComment);
 

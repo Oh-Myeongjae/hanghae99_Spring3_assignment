@@ -34,18 +34,13 @@ public class Post extends Timestamped {
   @Column(nullable = false)
   private String content;
 
-  @OneToMany(mappedBy ="post", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Comment> comments;
-
-  @OneToMany(mappedBy ="post", cascade = CascadeType.REMOVE, orphanRemoval = true)
-  private List<LikePost> likePost;
-
-  @Column()
-  private String imageUrl;
 
   @JoinColumn(name = "member_id", nullable = false)
   @ManyToOne(fetch = FetchType.LAZY)
   private Member member;
+
   @Column(nullable = true)
   private Long likes;
 

@@ -1,6 +1,5 @@
 package com.example.intermediate.configuration;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,12 +14,9 @@ public class AWSConfig {
     /**
      * Key는 중요정보이기 때문에 properties 파일에 저장한 뒤 가져와 사용하는 방법이 좋습니다.
      */
-    @Value("${cloud.aws.credentials.accessKey}")
-    private String iamAccessKey; // IAM Access Key
-    @Value("${cloud.aws.credentials.secretKey}")
-    private String iamSecretKey; // IAM Secret Key
-    @Value("${cloud.aws.region.static}")
-    private String region; // Bucket Region
+    private String iamAccessKey = "AKIARV26BY754VUB3PGK"; // IAM Access Key
+    private String iamSecretKey = "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"; // IAM Secret Key
+    private String region = "ap-northeast-2"; // Bucket Region
 
     @Bean
     public AmazonS3Client amazonS3Client() {

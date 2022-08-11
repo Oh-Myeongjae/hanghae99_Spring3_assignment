@@ -26,6 +26,15 @@ public class LikePost extends Timestamped{
     @ManyToOne(fetch = FetchType.LAZY)
     private Post post;
 
+    @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false)
+    private String content;
+
+    @Column(nullable = true)
+    private Long likes;
+
     public boolean validateMember(Member member) {
         return !this.member.equals(member);
     }
