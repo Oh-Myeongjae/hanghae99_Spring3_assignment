@@ -33,6 +33,22 @@ public class SecurityConfiguration {
   private final UserDetailsServiceImpl userDetailsService;
   private final AuthenticationEntryPointException authenticationEntryPointException;
   private final AccessDeniedHandlerException accessDeniedHandlerException;
+  private static final String[] PERMIT_URL_ARRAY = {
+          /* swagger v2 */
+          "/v2/api-docs",
+          "/swagger-resources",
+          "/swagger-resources/**",
+          "/configuration/ui",
+          "/configuration/security",
+          "/swagger-ui.html",
+          "/webjars/**",
+          /* project */
+          "/api/member/**",
+          "/api/post/**",
+          "/api/comment/**",
+          "/api/subcomment/**",
+          "/api/myPage/**"
+  };
 
   @Bean
   public PasswordEncoder passwordEncoder() {
@@ -65,11 +81,7 @@ public class SecurityConfiguration {
 
         .and()
         .authorizeRequests()
-        .antMatchers("/api/member/**").permitAll()
-        .antMatchers("/api/post/**").permitAll()
-        .antMatchers("/api/comment/**").permitAll()
-        .antMatchers("/api/subcomment/**").permitAll()
-        .antMatchers("/api/myPage/**").permitAll()
+        .antMatchers(PERMIT_URL_ARRAY).permitAll()
         .anyRequest().authenticated()
         .and()
         .authorizeRequests()
