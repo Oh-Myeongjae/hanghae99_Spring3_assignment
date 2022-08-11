@@ -230,4 +230,13 @@ public class PostService {
     amazonS3Client.deleteObject(request);
     return url;
   }
+
+  @Transactional
+  public Long scheduleDeletePost(Long id) {
+    Post post = isPresentPost(id);
+    subCommentRepository.deleteByPostId(id);
+    commentRepository.deleteByPostId(id);
+    postRepository.delete(post);
+    return id;
+  }
 }
