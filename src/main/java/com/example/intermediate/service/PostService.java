@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
+
+import com.example.intermediate.repository.SubCommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -38,6 +40,7 @@ public class PostService {
   private final PostRepository postRepository;
   private final CommentRepository commentRepository;
   private final TokenProvider tokenProvider;
+  private final SubCommentRepository subCommentRepository;
 
   @Transactional
   public ResponseDto<?> createPost(PostRequestDto postRequestDto, HttpServletRequest request) throws IOException {
